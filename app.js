@@ -18,13 +18,11 @@ var panel_light = function(x, y, s){
     }
 }
 
-var panel = function(){
-    
-}
-
 var app = function() {
     var lights = new Array(9);
-    var switches = new Array(16);
+    // var switches = new Array(16);
+		var upper_switches = new Array(8);
+		var lower_switches = new Array(8);
     
     var upper_inputs = new Array(8);
     var lower_inputs = new Array(8);
@@ -32,8 +30,8 @@ var app = function() {
     var outputs = new Array(9);
 
     this.init_app = function(){
-        var x_pos = 50;
-        var y_pos = 100;
+        var x_pos = 460;
+        var y_pos = 50;
         var counter = 0;
         
         for(var i = 0; i < 8; i++){
@@ -43,34 +41,27 @@ var app = function() {
         }
         
         // PLACE 9 LIGHTS, SET SOCKETS TO MATCH INDEX OF OUTPUTS ARRAY
-        for(var i = 8; i >= 0; i--){
-            lights[i] = new panel_light(x_pos, y_pos + 125, i );
-            x_pos += 50;
+        for(var i = 0; i < lights.length; i++){
+            lights[i] = new panel_light(x_pos - 10, y_pos + 125, i );
+            x_pos -= 50;
         }
         
-        // REST X POSITION FOR PLACING SWITCHES
-        x_pos = 110
-        
-        // PLACE 16 SWITCHES IN TWO ROWS OF 8
-        for(var i = 15; i >= 0; i--){
-            if(i == 7){
-                x_pos = 110;
-                y_pos += 50;
-            }
-            
-            // THIS STARTS SOCKET NUMBERS OVER FOR LOWER SWITCHES
-            // HELPS WITH MAPPING TO INPUT ARRAYS
-            if(i >= 7){
-                switches[i] = new panel_switch(x_pos, y_pos, counter, i);
-                counter++;
-                x_pos += 50;
-            }else{
-                switches[i] = new panel_switch(x_pos, y_pos, i, i);
-                x_pos += 50;
-            }
-            
-            
-        }
+        x_pos = 460;
+			
+				for(var i = 0; i < upper_switches.length; i++){
+            upper_switches[i] = new panel_switch(x_pos, y_pos, i, counter);
+            x_pos -= 50;
+            counter++;
+				}
+			
+				x_pos = 460;
+				y_pos += 50;
+			
+				for(var i = 0; i < lower_switches.length; i++){
+            lower_switches[i] = new panel_switch(x_pos, y_pos, i, counter);
+				    x_pos -= 50;
+            counter++;
+				}
         
         _draw();
         
@@ -79,22 +70,56 @@ var app = function() {
     
     var _draw = function(){
         context.clearRect(0,0,canvas.width, canvas.height);
-        for(var i = 0; i < switches.length; i++){
-            if(i < 9){
-                lights[i].draw();
-                switches[i].draw();
-            }else{
-                switches[i].draw();
-            }
+        for(var i = 0; i < upper_switches.length; i++){
+            upper_switches[i].draw();
+            lower_switches[i].draw();
+        }
+        
+        context.fillStyle = "#000";
+        
+        context.fillText("1", 80, 45);
+        context.fillText("0", 80, 65);
+        
+        context.fillText("1", 80, 95);
+        context.fillText("0", 80, 115);
+        
+        context.beginPath();
+        context.lineWidth = 2;
+        context.strokeStyle = "#000";
+        context.moveTo(50, 90);
+        context.lineTo(50, 110);
+        context.stroke();
+        
+        context.beginPath();
+        context.moveTo(40, 100);
+        context.lineTo(60, 100);
+        context.stroke();
+        
+        context.beginPath();
+        context.lineWidth = 2;
+
+        context.moveTo(20, 150);
+        context.lineTo(480, 150);
+        context.stroke();
+        
+        for(var i = 0; i < lights.length; i++){
+            lights[i].draw();
         }
     }
     
     var _flip = function(event){
         var location = convertCoordinates(canvas, event.clientX, event.clientY);
-        for(var i = 0; i < switches.length; i++){
+        for(var i = 0; i < upper_switches.length; i++){
             //console.log(switches[i]);
-            if(switches[i].contains(location.x, location.y)){
-                switches[i].flip();
+            if(upper_switches[i].contains(location.x, location.y)){
+                upper_switches[i].flip();
+                _compute();
+                _draw();
+                break;
+            }
+            
+            if(lower_switches[i].contains(location.x, location.y)){
+                lower_switches[i].flip();
                 _compute();
                 _draw();
                 break;
@@ -110,8 +135,8 @@ var app = function() {
         var buffer = {};
         var carry; 
         
-        for(var i = 7; i >= 0; i--){
-            if(i == 7){
+        for(var i = 0; i < outputs.length; i++){
+            if(i == 0){
                 buffer = full_adder(false, upper_inputs[i], lower_inputs[i]);
                 outputs[i] = buffer[0];
                 //console.log("buffer: " + buffer);
@@ -125,9 +150,9 @@ var app = function() {
             }
             
         }
-        //console.log(outputs);
-        console.log(lights);
-        console.log(switches);
+        // console.log(outputs);
+         console.log(lower_switches);
+         console.log(upper_switches);
     }
     
     function convertCoordinates(canvas, x, y){
@@ -154,9 +179,9 @@ var app = function() {
         this.flip = function(){
             _state = !_state;
             if(this.number <= 7){
-                lower_inputs[this.socket] = _state;
-            }else{
                 upper_inputs[this.socket] = _state;
+            }else{
+                lower_inputs[this.socket] = _state;
             }
             
             //console.log(upper_inputs);
