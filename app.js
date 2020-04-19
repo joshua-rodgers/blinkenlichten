@@ -77,6 +77,12 @@ var app = function() {
         
         context.fillStyle = "#000";
         
+        context.font = "20px 'Sonsie One'";
+        context.fillStyle = "#555";
+        context.fillText("Adder", 40, 25);
+        
+        context.font = "12px sans-serif"; 
+        context.fillStyle = "#d7f9f9";
         context.fillText("1", 80, 45);
         context.fillText("0", 80, 65);
         
@@ -84,8 +90,8 @@ var app = function() {
         context.fillText("0", 80, 115);
         
         context.beginPath();
-        context.lineWidth = 2;
-        context.strokeStyle = "#000";
+        context.lineWidth = 5;
+        context.strokeStyle = "#d7f9f9";
         context.moveTo(50, 90);
         context.lineTo(50, 110);
         context.stroke();
@@ -96,10 +102,10 @@ var app = function() {
         context.stroke();
         
         context.beginPath();
-        context.lineWidth = 2;
-
         context.moveTo(20, 150);
         context.lineTo(480, 150);
+        context.lineWidth = 5;
+        context.strokeStyle = "#d7f9f9";
         context.stroke();
         
         for(var i = 0; i < lights.length; i++){
