@@ -146,6 +146,24 @@ var app = function() {
         context.strokeStyle = "#d7f9f9";
         context.stroke();
         
+        // PLACE VALUES
+        context.fillStyle = "#aaa";
+        var num_cursor = 457;
+        var num = 2;
+        var pow = 0
+        for(var i = 0; i < 9; i++){
+            context.fillText(Math.pow(num, pow), num_cursor, 210);
+            pow++;
+            
+            if(i >= 3 && i < 5){
+                num_cursor -= 52;
+            }else if(i >= 5){
+                num_cursor -= 51;
+            }else{
+                num_cursor -= 50;
+            }
+        }
+        
         // REDRAW LIGHTS
         for(var i = 0; i < lights.length; i++){
             lights[i].draw();
