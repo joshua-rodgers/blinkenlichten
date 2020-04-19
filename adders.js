@@ -1,3 +1,4 @@
+// BOTH BUILT AS DESCRIBED BY DIAGRAM ON PGS 137-8 OF PETZOLD BOOK
 var half_adder = function(a, b){
     return [xor_gate(a, b), and_gate(a, b)];
 }
