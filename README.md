@@ -1,7 +1,7 @@
 # blinkenlichten
 an 8-bit binary adder in JS canvas.
 
-![Image of Binary Adding Machine](Screen Shot 2020-04-19 at 11.39.56 PM.png)
+![Image of Binary Adding Machine](BinaryAdder.png)
 
 ## Plan 
 
