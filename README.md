@@ -1,6 +1,8 @@
 # blinkenlichten
 an 8-bit binary adder in JS canvas.
 
+![Image of Binary Adding Machine](Screen Shot 2020-04-19 at 11.39.56 PM.png)
+
 ## Plan 
 
 building the front panel of an 8-bit binary adding machine like the one described early in Charles Petzold's book _Code_.
