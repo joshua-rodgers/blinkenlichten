@@ -205,7 +205,7 @@ var app = function() {
     
     // THE ACTUAL ADDER LOGIC
     var _compute = function(){
-        var buffer = {}; // EMPTY OBJECT TO HOLD RUNNING RESULTS
+        var buffer = []; // EMPTY ARRAY TO HOLD RUNNING RESULTS
         var carry; // WILL HOLD CARRIES
         
         // CASCADE THRU EACH SWITCH PAIR STARTING FROM LOW ORDER BIT
